@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,44 +29,21 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ci.nsu.mobile.main.ui.theme.PracticeTheme
+import ci.nsu.mobile.main.ui.theme.screens.FirstBox
+import ci.nsu.mobile.main.ui.theme.screens.MainScreen
+import ci.nsu.mobile.main.ui.theme.screens.SecondBox
+import kotlinx.coroutines.MainScope
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
         setContent {
-            PracticeTheme {
-                MainActivityScreen()
+            MaterialTheme{
+                Surface(modifier = Modifier.fillMaxSize()){
+                    MainScreen()
+                }
             }
-        }
-    }
-}
-
-sealed class LunchTrayScreen(val title: String) {
-    data object Home : LunchTrayScreen("Р")
-    data object ScreenOne : LunchTrayScreen("screenone")
-    data object ScreenTwo : LunchTrayScreen("screentwo")
-}
-
-@Composable
-fun MainActivityScreen(){
-    val navController = rememberNavController()
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
-    ){
-        Button( onClick = {  } ) {
-            Text("Рассчитать")
-        }
-        Button( onClick = {  } ) {
-            Text("История расчётов")
-        }
-        Button( onClick = {  } ) {
-            Text("Закрыть приложение")
         }
     }
 }
