@@ -1,6 +1,11 @@
+@file:Suppress("DEPRECATION")
+
 package ci.nsu.mobile.main
 
+import android.R.attr.onClick
+import android.R.attr.text
 import android.app.Activity
+import android.app.LauncherActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -16,11 +21,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButtonDefaults.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
@@ -37,6 +44,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import ci.nsu.mobile.main.screens.CountsSecond
 import ci.nsu.mobile.main.ui.ui.theme.PracticeTheme
 
 class CountsActivity : ComponentActivity() {
@@ -51,11 +62,17 @@ class CountsActivity : ComponentActivity() {
     }
 }
 
+sealed class LunchTrayScreen(val route: String) {
+    data object CountsPlus : LunchTrayScreen("countsplus")
+    data object Counts : LunchTrayScreen("counts")
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountScreen() {
     var receivedText by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val navController = rememberNavController()
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         TopAppBar(
@@ -114,7 +131,28 @@ fun CountScreen() {
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Button(onClick = { navController.navigate(LunchTrayScreen.CountsPlus.route){}
+
+                }
+                ){
+                    Text("Доп. параметры")
+                }
+
+                NavHost(navController = navController, startDestination = LunchTrayScreen.Counts.route, modifier = Modifier.padding(innerPadding)) {
+                    composable(LunchTrayScreen.CountsPlus.route) {
+                        CountsSecond()
+                    }
+                    composable(LunchTrayScreen.Counts.route) {
+                        Blank()
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+fun Blank(){
+    Surface(){}
 }
