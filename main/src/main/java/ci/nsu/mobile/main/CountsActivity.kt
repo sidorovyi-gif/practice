@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.TwoWayConverter
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -141,7 +142,7 @@ fun CountScreen() {
 
                 NavHost(navController = navController, startDestination = LunchTrayScreen.Counts.route, modifier = Modifier.padding(innerPadding)) {
                     composable(LunchTrayScreen.CountsPlus.route) {
-                        CountsSecond()
+                        CountsSecond(term.toInt())
                     }
                     composable(LunchTrayScreen.Counts.route) {
                         Blank()

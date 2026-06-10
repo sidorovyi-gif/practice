@@ -32,12 +32,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 
 
-fun CountsSecond(termMonths: Int,
-                 selectedRate: String,
-                 onRateSelected: (String) -> Unit,
-                 onBackToTermInput: () -> Unit // Возврат к вводу срока
-) {
+fun CountsSecond(termMonths: Int) {
     var expanded by remember { mutableStateOf(false) }
+    var selectedRate: String
+    var onRateSelected: (String) -> Unit
+    var onBackToTermInput: () -> Unit
 
     // Логика доступных ставок в зависимости от срока
     val availableRates = when {
